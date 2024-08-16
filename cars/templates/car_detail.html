@@ -1,0 +1,161 @@
+{% extends 'base.html' %} {% block content %}
+<style>
+  article {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 1%;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .car-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  .car-image img {
+    width: 100%;
+    height: auto;
+    border-right: 1px solid #ddd;
+  }
+
+  .car-details {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .car-details h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .car-details p {
+    margin: 5px 0;
+    font-size: 18px;
+    color: #666;
+  }
+
+  .car-details p strong {
+    color: #333;
+  }
+
+  .car-details .description {
+    max-height: 60px; /* Limita a altura da descrição */
+    overflow: hidden;
+    position: relative;
+  }
+
+  .car-details .description.expanded {
+    max-height: none; /* Permite a descrição expandir completamente */
+  }
+
+  .show-more {
+    color: #4caf50;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+
+  .show-more:hover {
+    color: #388e3c;
+  }
+
+  .button-group {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .edit-btn {
+    background-color: #4caf50;
+  }
+
+  .delete-btn {
+    background-color: #f44336;
+  }
+</style>
+<article>
+  <div class="car-container">
+    <div class="car-image">
+      {% if object.photo %}
+      <img
+        src="{{object.photo.url}}"
+        alt="{{ object.brand }} {{ object.model }}"
+      />
+      {% else %}
+      <img
+        src="/media/cars/noimg.jpg"
+        alt="{{ object.brand }} {{ object.model }}"
+      />
+      {% endif %}
+    </div>
+
+    <div class="car-details">
+      <h1>{{ object.brand }} {{ object.model }}</h1>
+      {% if object.bio %}
+        <div class="description" id="description">
+          <p><strong>Descrição:</strong> {{ object.bio }}</p>
+        </div>
+        <span class="show-more" id="show-more" onclick="toggleDescription()">Ver mais</span>
+      {% endif %}
+      <p><strong>Marca:</strong> {{ object.brand }}</p>
+      <p><strong>Ano de Fabricação:</strong> {{ object.factory_year }}</p>
+      <p><strong>Ano do Modelo:</strong> {{ object.model_year }}</p>
+      <p><strong>Placa:</strong> {{ object.plate }}</p>
+      <p><strong>Valor:</strong> R$ {{ object.value|floatformat:"2g" }}</p>
+      {% if user.is_authenticated %}
+        <div class="button-group">
+          <a href="{% url 'car_update' pk=object.pk %}" class="edit-btn"
+            >Editar</a
+          >
+          <a href="{% url 'car_delete' pk=object.pk %}" class="delete-btn"
+            >Excluir</a
+          >
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</article>
+<script>
+  function toggleDescription() {
+    const description = document.getElementById("description");
+    const showMore = document.getElementById("show-more");
+
+    if (description.classList.contains("expanded")) {
+      description.classList.remove("expanded");
+      showMore.textContent = "Ver mais";
+    } else {
+      description.classList.add("expanded");
+      showMore.textContent = "Ver menos";
+    }
+  }
+</script>
+{% endblock %}

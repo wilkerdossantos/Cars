@@ -1,0 +1,124 @@
+{% extends 'base.html' %} {% block content %}
+<style>
+  article {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .registration-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .registration-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  .form-group input, textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+}
+
+.cancel-btn {
+    background-color: #054774;
+}
+
+.delete-btn {
+    background-color: #f44336;
+}
+.submit-btn {
+    background-color: #4CAF50;
+}
+</style>
+<article>
+  <div class="registration-container">
+    <h1>Editar Cadastro de Carro</h1>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ form.model.errors }}
+        <label for="model">Modelo:</label>
+        {{ form.model }}
+      </div>
+      <div class="form-group">
+        {{ form.brand.errors }}
+        <label for="brand">Marca:</label>
+        {{ form.brand }}
+      </div>
+      <div class="form-group">
+        {{ form.factory_year.errors }}
+        <label for="year-manufacture">Ano de Fabricação:</label>
+        {{ form.factory_year }}
+      </div>
+      <div class="form-group">
+        {{ form.model_year.errors }}
+        <label for="year-model">Ano do Modelo:</label>
+        {{ form.model_year }}
+      </div>
+      <div class="form-group">
+        {{ form.plate.errors }}
+        <label for="plate">Placa:</label>
+        {{ form.plate }}
+      </div>
+      <div class="form-group">
+        {{ form.value.errors }}
+        <label for="price">Valor:</label>
+        {{ form.value }}
+      </div>
+      <div class="form-group">
+        {{ form.bio.errors }}
+        <label for="bio">Descrição:</label>
+        {{ form.bio }}
+      </div>
+      <div class="form-group">
+        {{ form.photo.errors }}
+        <label for="photo">Foto do Carro:</label>
+        {{ form.photo }}
+      </div>
+      <div class="button-group">
+        <button type="submit" class="submit-btn">Salvar Alterações</button>
+        <button type="button" class="delete-btn" onclick="window.location.href='{% url 'car_delete' pk=object.pk %}'">Excluir Carro</button>
+        <button type="button" class="cancel-btn" onclick="window.location.href='{% url 'car_detail' object.pk %}'">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</article>
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    article {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+}
+
+.confirmation-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.confirmation-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.confirmation-container p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    width: 48%;
+    text-align: center;
+}
+
+.confirm-btn {
+    background-color: #f44336;
+}
+
+.cancel-btn {
+    background-color: #4CAF50;
+}
+</style>
+<article>
+    <div class="confirmation-container">
+        <h1>Confirmar Exclusão</h1>
+        <p>Você realmente deseja excluir o carro <strong>{{ object }}</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <div class="button-group">
+                <button type="submit" class="confirm-btn">Sim, Excluir</button>
+                <button type="button" class="cancel-btn" onclick="window.location.href='{% url 'car_detail' object.pk %}'">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</article>
+{% endblock %}

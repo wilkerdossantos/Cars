@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-links a:hover {
+    color: #4CAF50; /* Cor de destaque ao passar o mouse */
+}
+
+.nav-user {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px 20px;
+    margin-top: auto;
+}
+
+.footer a {
+    color: #4CAF50;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.footer a:hover {
+    color: #76FF03; /* Cor de destaque ao passar o mouse */
+}
+
+.footer p {
+    margin: 5px 0;
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="nav-logo">
+          <a href="">WS Multimarcas</a>
+      </div>
+      <ul class="nav-links">
+          <li><a href="{% url 'cars_list' %}">Carros</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'new_car' %}">Cadastrar Carro</a></li>
+        {% else %}
+          <li><a href="{% url 'register' %}">Cadastre-se</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+      </ul>
+      <div class="nav-user">
+        {% if user.is_authenticated %}
+          <span>Olá, {{ user.username }}</span>
+          <span><a href="{% url 'logout' %}">Sair</a></span>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 WS Multimarcas. Todos os direitos reservados.</p>
+    <p>
+        <a href="">Sobre</a> |
+        <a href="">Contato</a> |
+        <a href="">Política de Privacidade</a>
+    </p>
+</footer>
+</body>
+</html>
