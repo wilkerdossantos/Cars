@@ -9,6 +9,7 @@ Este é um projeto desenvolvido no Curso Django Master, utilizando o Django Fram
 - **Django Templates**
 - **Signals**
 - **Urls**
+- **Django Admin**
 - **entre outros**
 
 ## Funcionalidades Adicionais
