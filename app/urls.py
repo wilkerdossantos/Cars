@@ -2,11 +2,12 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from cars.views import CarsListView, CarDetailView, NewCarCreateView, CarUpdateView, CarDeleteView
+from cars.views import CarsListView, CarDetailView, NewCarCreateView, CarUpdateView, CarDeleteView, IndexRedirectView
 from accounts.views import register_view, login_view, logout_view
 
 
 urlpatterns = [
+    path('', IndexRedirectView.as_view(), name='index'),
     path('admin/', admin.site.urls),
     path('cars/', CarsListView.as_view(), name='cars_list'),
     path('new_car/', NewCarCreateView.as_view(), name='new_car'),

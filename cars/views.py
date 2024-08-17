@@ -1,10 +1,15 @@
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, RedirectView
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from cars.models import Car
 from cars.forms import CarModelForm
+
+
+class IndexRedirectView(RedirectView):
+    permanent = False
+    url = reverse_lazy('cars_list')
 
 
 class CarsListView(ListView):
