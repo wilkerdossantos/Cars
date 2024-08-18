@@ -19,16 +19,25 @@ class CarsListView(ListView):
 
     def get_queryset(self):
         search = self.request.GET.get('search')
-        query_all_cars = super().get_queryset().order_by('model')
-        cars = query_all_cars.filter(
-            Q(model__icontains=search) | Q(brand__name__icontains=search)
-        ) if search else query_all_cars
+        query_all_cars = super().get_queryset().order_by('model').prefetch_related('car_photo')
+        if search:
+            cars = query_all_cars.filter(
+                Q(model__icontains=search) | Q(brand__name__icontains=search)
+            )
+        else: 
+            cars = query_all_cars
         return cars
 
 
 class CarDetailView(DetailView):
     model = Car
     template_name = 'car_detail.html'
+    context_object_name = 'cars'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['car_photo'] = self.object.car_photo.all()
+        return context
 
 
 @method_decorator(login_required(login_url='login'), name='dispatch')

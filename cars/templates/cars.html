@@ -40,7 +40,7 @@
   }
 
   .hero-carousel a {
-    background-color: #4caf50;
+    background-color: #000080	;
     color: white;
     padding: 15px 30px;
     text-decoration: none;
@@ -52,7 +52,7 @@
   }
 
   .hero-carousel a:hover {
-    background-color: #45a049;
+    background-color: #191970;
   }
 
   .search-bar {
@@ -73,7 +73,7 @@
   .search-bar input[type="submit"] {
     padding: 10px 20px;
     font-size: 18px;
-    background-color: #4caf50;
+    background-color: #000080	;
     color: white;
     border: none;
     border-radius: 4px;
@@ -82,7 +82,7 @@
   }
 
   .search-bar input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #191970;
   }
 
   .car-card {
@@ -118,14 +118,14 @@
 
   .car-card .price {
     font-size: 22px;
-    color: #4caf50;
+    color: #000080	;
     margin: 10px 0;
   }
 
   .car-card a {
     display: block;
     padding: 10px;
-    background-color: #4caf50;
+    background-color: #000080	;
     color: white;
     text-decoration: none;
     font-size: 18px;
@@ -134,7 +134,7 @@
   }
 
   .car-card a:hover {
-    background-color: #45a049;
+    background-color: #191970;
   }
 </style>
 
@@ -210,7 +210,11 @@
     {% for car in cars %}
     <div class="col-md-4 col-sm-6 mb-4">
       <div class="car-card">
-        <img src="{{ car.photo.url }}" alt="{{ car.model }}" />
+        {% if car.car_photo.first.photo %}
+        <img src="{{ car.car_photo.first.photo.url }}" alt="{{ car.model }}" />
+        {% else %}
+        <img src="" alt="{{ car.model }}" />
+        {% endif %}
         <h2>{{ car.brand }} {{ car.model }}</h2>
         <p>{{ car.factory_year }} - {{ car.model_year }}</p>
         <p class="price">R$ {{ car.value|floatformat:"2g" }}</p>

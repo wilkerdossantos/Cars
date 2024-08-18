@@ -52,14 +52,14 @@
   }
 
   .show-more {
-    color: #4caf50;
+    color: #4169E1;
     cursor: pointer;
     font-weight: bold;
     margin-top: 5px;
   }
 
   .show-more:hover {
-    color: #388e3c;
+    color: #000080;
   }
 
   .button-group {
@@ -94,7 +94,7 @@
 
   /* Carrossel */
   .carousel-item img {
-    height: 400px;
+    height: 80vh;
     object-fit: cover;
   }
 
@@ -109,7 +109,7 @@
   }
 
   .thumbnail-carousel .active-thumbnail {
-    border: 2px solid #4caf50;
+    border: 2px solid #4169E1;
   }
 </style>
 
@@ -119,9 +119,9 @@
       <!-- Carrossel de Imagens -->
       <div id="carImagesCarousel" class="carousel slide">
         <div class="carousel-inner">
-          {% for image in object.photos.all %}
+          {% for image in object.car_photo.all %}
           <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ image.url }}" class="d-block w-100" alt="{{ object.brand }} {{ object.model }}">
+            <img src="{{ image.photo.url }}" class="d-block w-100" alt="{{ object.brand }} {{ object.model }}">
           </div>
           {% endfor %}
         </div>
@@ -136,15 +136,11 @@
       </div>
 
       <!-- Barra de Miniaturas -->
-      <div id="thumbnailCarousel" class="carousel slide thumbnail-carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="d-flex">
-              {% for image in object.photos.all %}
-              <img src="{{ image.url }}" class="img-thumbnail {% if forloop.first %}active-thumbnail{% endif %}" onclick="changeCarouselImage('{{ image.url }}')">
-              {% endfor %}
-            </div>
-          </div>
+      <div id="thumbnailCarousel" class="thumbnail-carousel">
+        <div class="d-flex">
+          {% for image in object.car_photo.all %}
+          <img src="{{ image.photo.url }}" class="img-thumbnail {% if forloop.first %}active-thumbnail{% endif %}" onclick="changeCarouselImage({{ forloop.counter0 }})">
+          {% endfor %}
         </div>
       </div>
 
@@ -186,14 +182,17 @@
     }
   }
 
-  function changeCarouselImage(imageUrl) {
+  function changeCarouselImage(index) {
     const carousel = document.querySelector('#carImagesCarousel');
-    const carouselItems = carousel.querySelectorAll('.carousel-item img');
-    carouselItems.forEach((img) => {
-      if (img.src === imageUrl) {
-        const index = Array.from(carouselItems).indexOf(img);
-        const carouselInstance = bootstrap.Carousel.getOrCreateInstance(carousel);
-        carouselInstance.to(index);
+    const carouselInstance = bootstrap.Carousel.getOrCreateInstance(carousel);
+    carouselInstance.to(index);
+
+    // Atualiza a classe da miniatura ativa
+    document.querySelectorAll('.thumbnail-carousel img').forEach((img, i) => {
+      if (i === index) {
+        img.classList.add('active-thumbnail');
+      } else {
+        img.classList.remove('active-thumbnail');
       }
     });
   }

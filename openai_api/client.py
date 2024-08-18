@@ -1,9 +1,8 @@
 import os
 from openai import OpenAI
 
-key=os.environ.get("API_KEY_OPEN_IA")
 client = OpenAI(
-    api_key=key
+    api_key=os.environ.get("API_KEY")
 )
 
 def get_car_ai_bio(model, brand, year):
@@ -14,8 +13,8 @@ def get_car_ai_bio(model, brand, year):
     message = message.format(brand, model, year)
     completion = client.chat.completions.create(
     model="gpt-3.5-turbo",
-     messages=[
-        {"role": "user", "content": message}
-    ]
+        messages=[
+            {"role": "user", "content": message}
+        ]
     )
     return completion.choices[0].message.content

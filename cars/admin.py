@@ -1,5 +1,5 @@
 from django.contrib import admin
-from cars.models import Brand, Car
+from cars.models import Brand, Car, CarPhoto
 
 
 class BrandAdmin(admin.ModelAdmin):
@@ -7,10 +7,16 @@ class BrandAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
+class PhotoCarInline(admin.TabularInline):
+    model = CarPhoto
+    extra = 5
+
+
 class CarAdmin(admin.ModelAdmin):
     list_display = ('model', 'brand', 'factory_year',
-                    'model_year', 'value', 'plate', 'photo',)
+                    'model_year', 'value', 'plate',)
     search_fields = ('model', 'brand',)
+    inlines = [PhotoCarInline]
 
 
 admin.site.register(Brand, BrandAdmin)

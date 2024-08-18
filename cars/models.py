@@ -18,11 +18,19 @@ class Car(models.Model):
     model_year = models.IntegerField(blank=True, null=True)
     plate = models.CharField(max_length=10, blank=True, null=True)
     value = models.FloatField(blank=True, null=True)
-    photo = models.ImageField(upload_to='cars/', blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
 
     def __str__(self) -> str:
         return self.model
+
+
+class CarPhoto(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='car_photo')
+    photo = models.ImageField(upload_to='cars/', blank=True, null=True)
+    description = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f'photos of {self.car.model}'
 
 
 class CarInventory(models.Model):
