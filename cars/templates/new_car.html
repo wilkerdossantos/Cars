@@ -15,8 +15,7 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 40px;
-    max-width: 500px;
-    width: 100%;
+    margin: 2vh;
   }
 
   .registration-container h1 {
@@ -102,9 +101,9 @@
         {{ form.bio }}
       </div>
       <div class="form-group">
-        {{ form.photo.errors }}
-        <label for="photo">Foto do Carro:</label>
-        {{ form.photo }}
+        {{ form.photos.errors }}
+        <label for="photo">Fotos do Carro:</label>
+        {{ form.photos }}
       </div>
       <div class="button-group">
         <button type="submit" class="submit-btn">Cadastrar Carro</button>

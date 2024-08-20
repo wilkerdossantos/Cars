@@ -9,7 +9,7 @@ class BrandAdmin(admin.ModelAdmin):
 
 class PhotoCarInline(admin.TabularInline):
     model = CarPhoto
-    extra = 5
+    extra = 1
 
 
 class CarAdmin(admin.ModelAdmin):
