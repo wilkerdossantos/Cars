@@ -209,7 +209,7 @@
         {% if car.car_photo.first.photo %}
         <img src="{{ car.car_photo.first.photo.url }}" alt="{{ car.model }}" />
         {% else %}
-        <img src="" alt="{{ car.model }}" />
+        <img src="media/Image-not-found.png" alt="{{ car.model }}" />
         {% endif %}
         <h2>{{ car.brand }} {{ car.model }}</h2>
         <p>{{ car.factory_year }} - {{ car.model_year }}</p>

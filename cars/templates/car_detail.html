@@ -120,7 +120,11 @@
         <div class="carousel-inner">
           {% for image in object.car_photo.all %}
           <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            {% if image.photo.url %}
             <img src="{{ image.photo.url }}" class="d-block w-100" alt="{{ object.brand }} {{ object.model }}">
+            {% else %}
+            <img src="media/Image-not-found.png" class="d-block w-100" alt="{{ object.brand }} {{ object.model }}">
+            {% endif %}
           </div>
           {% endfor %}
         </div>
