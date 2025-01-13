@@ -118,15 +118,17 @@
       <!-- Carrossel de Imagens -->
       <div id="carImagesCarousel" class="carousel slide">
         <div class="carousel-inner">
-          {% for image in object.car_photo.all %}
-          <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            {% if image.photo.url %}
-            <img src="{{ image.photo.url }}" class="d-block w-100" alt="{{ object.brand }} {{ object.model }}">
-            {% else %}
-            <img src="media/Image-not-found.png" class="d-block w-100" alt="{{ object.brand }} {{ object.model }}">
-            {% endif %}
-          </div>
-          {% endfor %}
+          {% if object.car_photo.all %}
+            {% for image in object.car_photo.all %}
+              <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ image.photo.url }}" class="d-block w-100" alt="{{ object.brand }} {{ object.model }}">
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="carousel-item active">
+              <img src="/media/Image-not-found.png" class="d-block w-100" alt="{{ object.brand }} {{ object.model }}">
+            </div>
+          {% endif %}
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carImagesCarousel" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
